@@ -1,4 +1,4 @@
-module golang-repo-template
+module go-quiz
 
 go 1.17
 

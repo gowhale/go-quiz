@@ -1,4 +1,4 @@
-# golang-repo-template
+# go-quiz
 A template for all my future Go projects!
 
 ## Actions created by this template:
