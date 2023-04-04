@@ -1,8 +1,7 @@
-// Package main runs the shopping list
 package main
 
-import "log"
+import "go-quiz/pkg/quiz"
 
 func main() {
-	log.Println("Hello World!")
+	quiz.Execute()
 }

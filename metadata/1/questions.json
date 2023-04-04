@@ -1,0 +1,20 @@
+[
+    {
+        "question": "Snowflake Cloud Data Warehouse is provided as",
+        "options": [
+            "Infrastructure As A Service (laaS)",
+            "Platform As A Service (PaaS)",
+            "Software As A Service (SaaS)",
+            "Available in all forms (laaS, PaaS, SaaS)"
+        ],
+        "answer": "Software As A Service (SaaS)"
+    },
+    {
+        "question": "Snowflake is built on the top of Apache Spark processing technology?",
+        "options": [
+            "True",
+            "False"
+        ],
+        "answer": "False"
+    }
+]
