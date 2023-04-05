@@ -1,7 +1,7 @@
 package quiz
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/spf13/cobra"
 )
@@ -10,17 +10,18 @@ var rootCmd = &cobra.Command{
 	Use:   "quiz",
 	Short: "",
 	Long:  ``,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		questions, err := getQuestions(&local{})
 		if err != nil {
-			fmt.Println(err)
+			return err
 		}
-		playQuiz(questions, &keyboard{})
+		return playQuiz(questions, &keyboard{})
 	},
 }
 
+// Execute adds the quiz flag to the rootCmd
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 }

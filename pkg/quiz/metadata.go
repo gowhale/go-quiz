@@ -18,22 +18,20 @@ type loader interface {
 
 type local struct{}
 
-func (l *local) Open(name string) (*os.File, error) {
+func (*local) Open(name string) (*os.File, error) {
 	return os.Open(name)
 }
 
-func (l *local) Close(jsonFile *os.File) error {
+func (*local) Close(jsonFile *os.File) error {
 	return jsonFile.Close()
 }
 
-func (l *local) ReadAll(r io.Reader) ([]byte, error) {
+func (*local) ReadAll(r io.Reader) ([]byte, error) {
 	return ioutil.ReadAll(r)
 }
 
-func (l *local) Unmarshal(data []byte) ([]question, error) {
-	var v []question
-	err := json.Unmarshal(data, &v)
-	return v, err
+func (*local) Unmarshal(data []byte) (v []question, err error) {
+	return v, json.Unmarshal(data, &v)
 }
 
 func getQuestions(l loader) (questions []question, err error) {
@@ -54,7 +52,7 @@ func getQuestions(l loader) (questions []question, err error) {
 
 	byteValue, err := l.ReadAll(jsonFile)
 	if err != nil {
-		return
+		return nil, err
 	}
 	return l.Unmarshal(byteValue)
 }
