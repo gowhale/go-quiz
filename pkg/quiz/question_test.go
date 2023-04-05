@@ -76,13 +76,15 @@ func (m *quesstionTest) TestCheckAnswerIncorrect() {
 }
 
 func (m *quesstionTest) TestRevealSuccessCorrect() {
-	correct := revealSuccess(m.exampleQuestion, 3)
+	correct, err := revealSuccess(m.exampleQuestion, 3)
 	m.True(correct)
+	m.Nil(err)
 }
 
 func (m *quesstionTest) TestRevealSuccessIncorrect() {
-	correct := revealSuccess(m.exampleQuestion, 1)
+	correct, err := revealSuccess(m.exampleQuestion, 1)
 	m.False(correct)
+	m.Nil(err)
 }
 
 func (m *quesstionTest) TestDisplayQuestion() {
