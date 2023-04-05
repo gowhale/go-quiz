@@ -1,3 +1,4 @@
+// Package quiz is responsible for generating and playing a quiz
 package quiz
 
 func playQuiz(questions []question, i inputter) error {

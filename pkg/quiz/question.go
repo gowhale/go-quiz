@@ -16,15 +16,35 @@ type inputter interface {
 
 type keyboard struct{}
 
-func (k *keyboard) getInput() (string, error) {
+func (*keyboard) getInput() (string, error) {
 	reader := bufio.NewReader(os.Stdin)
 	userInput, err := reader.ReadString('\n')
 	userInput = strings.TrimSpace(userInput)
 	return userInput, err
 }
 
+func validateInput(userInput string, optionCount int) (intInput int, valid bool, err error) {
+	intInput, err = strconv.Atoi(userInput)
+	if err != nil {
+		_, err := fmt.Println("Please enter a number")
+		return -1, false, err
+	}
+	if intInput > optionCount || intInput < 0 {
+		_, err := fmt.Printf("Please enter a option between 1 and %d\n", optionCount)
+		if err != nil {
+			return -1, false, err
+		}
+		return -1, false, nil
+	}
+	return intInput, true, nil
+}
+
 func getInput(q question, i inputter) (int, error) {
-	fmt.Print("What is your answer?: ")
+	_, err := fmt.Print("What is your answer?: ")
+	if err != nil {
+		return -1, err
+	}
+
 	var intInput int
 	valid := false
 	optionCount := len(q.Options)
@@ -34,16 +54,9 @@ func getInput(q question, i inputter) (int, error) {
 			log.Println("err")
 			return -1, err
 		}
-		intInput, err = strconv.Atoi(userInput)
+		intInput, valid, err = validateInput(userInput, optionCount)
 		if err != nil {
-			fmt.Println("Please enter a number")
-		} else {
-			if intInput < optionCount+1 && intInput > 0 {
-				valid = true
-			} else {
-				fmt.Printf("Please enter a option between 1 and %d\n", optionCount)
-			}
-
+			return -1, err
 		}
 	}
 	return intInput - 1, nil
@@ -59,13 +72,15 @@ func checkAnswer(q question, answer int) bool {
 	return q.Options[answer] == q.Answer
 }
 
-func revealSuccess(q question, answer int) bool {
+func revealSuccess(q question, answer int) (bool, error) {
 	if checkAnswer(q, answer) {
-		fmt.Println("CORRECT! WELL DONE!")
-		return true
+		if _, err := fmt.Println("CORRECT! WELL DONE!"); err != nil {
+			return false, err
+		}
+		return true, nil
 	}
-	fmt.Println("INCORRECT")
-	return false
+	_, err := fmt.Println("INCORRECT")
+	return false, err
 }
 
 func displayQuestion(q question) error {
