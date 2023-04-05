@@ -1,8 +1,9 @@
-// Package main runs the shopping list
+// Package main is the entry point for the application
+// Adds cobra commands
 package main
 
-import "log"
+import "go-quiz/pkg/quiz"
 
 func main() {
-	log.Println("Hello World!")
+	quiz.Execute()
 }

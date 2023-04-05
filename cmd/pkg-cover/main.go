@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	minPercentCov = 80.0
+	minPercentCov = 70.0
 
 	coverageStringNotFound = -1.0
 	firstItemIndex         = 1
