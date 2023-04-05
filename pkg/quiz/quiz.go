@@ -10,7 +10,9 @@ func playQuiz(questions []question, i inputter) error {
 		if err != nil {
 			return err
 		}
-		revealSuccess(q, optionIndex)
+		if _, err := revealSuccess(q, optionIndex); err != nil {
+			return err
+		}
 	}
 	return nil
 }
